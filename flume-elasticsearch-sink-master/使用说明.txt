@@ -1,0 +1,32 @@
+flume1.7对接elasticsearch5.5
+使用说明：
+由于elasticsearch5.5需要在jdk1.8环境中执行，flume中使用到elasticsearch5.5的jar，所以flume1.7页必须在jdk1.8的环境中
+第一步：
+	执行 install 打包jar，将打包好的jar放在flume的lib文件夹中
+第二步：
+   将需要用到lib下的jar复制到flume的lib目录下面
+第三步：
+	将项目中的lib包放到flume的lib文件夹后，删除下面的jar
+  * jackson-annotations-2.3.0.jar
+
+  * jackson-core-2.3.1.jar
+
+  * jackson-databind-2.3.1.jar
+
+  * jopt-simple-3.2.jar
+
+  * netty-3.9.4.Final.jar
+  
+  * guava-11.0.2.jar
+
+  * flume-ng-elasticsearch-sink-1.6.7.jar
+  
+第四步：
+	flume的修改sink配置为自定义的处理类：
+	kafka-agent.sinks.es-sink.serializer = org.apache.flume.sink.elasticsearch5.ElasticSearchLogStashEventSerializer
+	kafka-agent.sinks.es-sink.type = org.apache.flume.sink.elasticsearch5.ElasticSearchSink
+	
+Linux 下启动flume命令
+nohup flume-ng agent -n kafka-agent -c ./ -f flume-es.properties -Dflume.root.logger=DEBUG,console &
+
+  
